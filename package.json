@@ -1,0 +1,55 @@
+{
+  "name": "mfe-content-nested",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "@types/jest": "^26.0.15",
+    "@types/node": "^12.0.0",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "@types/vis": "^4.21.22",
+    "html-webpack-plugin": "^5.5.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "4.0.3",
+    "serve": "^13.0.2",
+    "ts-loader": "^9.2.6",
+    "typescript": "^4.1.2",
+    "vis-data": "^7.1.2",
+    "vis-network": "^9.1.0",
+    "web-vitals": "^1.0.1",
+    "webpack": "^5.62.1",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.4.0"
+  },
+  "scripts": {
+    "start": "webpack serve",
+    "build": "webpack --config webpack.prod.js",
+    "serve": "serve dist -p 3005",
+    "deploy": " REACT_APP_STAGE=production GENERATE_SOURCEMAP=true  ./configure.sh $(grep DOMAIN .env.scripts | cut -d '=' -f2) && webpack --config webpack.prod.js && aws s3 cp dist/ s3://$(grep S3_BUCKET .env.scripts | cut -d '=' -f2)/ --recursive && aws cloudfront create-invalidation --distribution-id $(grep DISTRIBUTION .env.scripts | cut -d '=' -f2) --paths '/*'",
+    "clean": "rm -rf dist",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
